@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  
+  spring-boot-admin:
+    image: codecentric/spring-boot-admin
+    container_name: spring-boot-admin
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom
+    networks:
+      - monitoring
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.1
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - monitoring
+
+  splunk:
+    image: splunk/splunk:latest
+    container_name: splunk
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_USER_PASSWORD=changeme
+      - SPLUNK_HEC_TOKEN=12345678-ABCD-1234-ABCD-1234567890AB
+    ports:
+      - "8000:8000"   # Splunk Web UI
+      - "8088:8088"   # HTTP Event Collector (HEC)
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - monitoring
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - monitoring
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge

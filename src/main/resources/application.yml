@@ -1,0 +1,20 @@
+server:
+  port: 9002
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    prometheus:
+      enabled: true
+spring:
+  boot:
+    admin:
+      client:
+        url:
+        - http://localhost:1111/
