@@ -24,8 +24,8 @@ public class ConsumerController {
 
 	@GetMapping("/message/{name}")
 	public String getMessageFromProducer(@PathVariable("name") String name) {
-		log.info("inside ConsumerController:getMessageFromProducer()");
-		log.debug("inside ConsumerController:getMessageFromProducer()");
+		log.info("inside ConsumerController:getMessageFromProducer(): "+name);
+		log.debug("inside ConsumerController:getMessageFromProducer(): "+name);
 
 		return fienClientTemplate.getProducerMessage(name);
 	}
