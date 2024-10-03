@@ -4,7 +4,6 @@ server:
 eureka:
   instance:
     prefer-ip-address: true  # Ensures the IP address is used to register with Eureka
-    ip-address: ${DOCKER_IP}  # You can pass this environment variable during Docker run to specify the IP
   client:
     serviceUrl:
       defaultZone: http://host.docker.internal:8761/eureka/  # Using host.docker.internal for Eureka in Docker
