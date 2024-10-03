@@ -1,9 +1,14 @@
 server:
   port: 9002
+
 eureka:
+  instance:
+    prefer-ip-address: true  # Ensures the IP address is used to register with Eureka
+    ip-address: ${DOCKER_IP}  # You can pass this environment variable during Docker run to specify the IP
   client:
     serviceUrl:
-      defaultZone: http://host.docker.internal:8761/eureka/
+      defaultZone: http://host.docker.internal:8761/eureka/  # Using host.docker.internal for Eureka in Docker
+
 management:
   endpoints:
     web:
@@ -12,9 +17,15 @@ management:
   endpoint:
     prometheus:
       enabled: true
+
 spring:
   boot:
     admin:
       client:
         url:
-        - http://host.docker.internal:1111/
+          - http://host.docker.internal:1111/  # Admin service URL pointing to host.docker.internal
+
+logging:
+  level:
+    com.netflix.discovery: DEBUG  # Enables debug logging for Eureka discovery to troubleshoot issues
+    org.springframework.cloud.netflix: DEBUG

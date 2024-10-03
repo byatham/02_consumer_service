@@ -1,4 +1,4 @@
-package com.anu.consumer.fien;
+ package com.anu.consumer.fien;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
