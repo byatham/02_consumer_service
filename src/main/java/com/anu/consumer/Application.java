@@ -15,7 +15,7 @@ public class Application {
 
         log.info("consumer application has been started >>>>>");
 		SpringApplication.run(Application.class, args);
-		log.info("consumer application has been ended >>>>>")
+		log.info("consumer application has been ended >>>>>");
 
 	}
 
